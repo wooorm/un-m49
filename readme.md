@@ -105,7 +105,6 @@ Intermediate regions aren’t used a lot.
 *   [`iso-15924`](https://github.com/wooorm/iso-15924)
     — ISO 15924 codes
 
-
 ## License
 
 [MIT][license] © [Titus Wormer][author]

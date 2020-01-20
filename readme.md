@@ -24,7 +24,7 @@ npm install un-m49
 ```js
 var m49 = require('un-m49')
 
-console.log(iso6393.slice(0, 20))
+console.log(m49.slice(0, 20))
 ```
 
 Yields:

@@ -98,6 +98,8 @@ Intermediate regions aren’t used a lot.
     — Parse and stringify BCP 47 language tags
 *   [`bcp-47-match`](https://github.com/wooorm/bcp-47-match)
     — Match BCP 47 language tags with language ranges per RFC 4647
+*   [`bcp-47-normalize`](https://github.com/wooorm/bcp-47-normalize)
+    — Normalize, canonicalize, and format BCP 47 tags
 *   [`iso-3166`](https://github.com/wooorm/iso-3166)
     — ISO 3166 codes
 *   [`iso-639-2`](https://github.com/wooorm/iso-639-2)

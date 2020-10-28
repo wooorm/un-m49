@@ -35,20 +35,18 @@ https
   .request('https://unstats.un.org/unsd/methodology/m49/overview/', onrequest)
   .end()
 
-function onrequest(res) {
-  res.pipe(concat(onconcat)).on('error', console.error)
+function onrequest(response) {
+  response.pipe(concat(onconcat)).on('error', console.error)
 }
 
 function onconcat(buf) {
-  var tree = unified()
-    .use(parse)
-    .parse(buf)
+  var tree = unified().use(parse).parse(buf)
 
   var table = $.select('#downloadTableEN', tree)
   var headers = $.selectAll('thead td', table).map(clean)
   var rows = $.selectAll('tbody tr', table)
 
-  var fields = headers.map(d => {
+  var fields = headers.map((d) => {
     if (!(d in headerToField)) {
       throw new Error('Cannot handle unknown column header: ', d)
     }
@@ -56,7 +54,7 @@ function onconcat(buf) {
     return headerToField[d]
   })
 
-  var records = rows.map(row => {
+  var records = rows.map((row) => {
     var record = {}
 
     $.selectAll('td', row).forEach((cell, index) => {
@@ -79,7 +77,7 @@ function onconcat(buf) {
 
   var byCode = {}
 
-  records.forEach(record => {
+  records.forEach((record) => {
     var stack = []
 
     types.forEach((prefix, kind) => {
@@ -111,7 +109,7 @@ function onconcat(buf) {
 
   var codes = Object.keys(byCode)
     .sort()
-    .map(code => {
+    .map((code) => {
       var entry = byCode[code]
 
       entry.parent = entry.stack.pop()

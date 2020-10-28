@@ -19,6 +19,7 @@ var headerToField = {
   'Intermediate Region Name': 'intermediateName',
   'Country or Area': 'areaName',
   'M49 Code': 'area',
+  'ISO-alpha2 Code': 'iso3166Alpha2',
   'ISO-alpha3 Code': 'iso3166',
   'Least Developed Countries (LDC)': 'ldc',
   'Land Locked Developing Countries (LLDC)': 'lldc',
@@ -48,7 +49,7 @@ function onconcat(buf) {
 
   var fields = headers.map((d) => {
     if (!(d in headerToField)) {
-      throw new Error('Cannot handle unknown column header: ', d)
+      throw new Error('Cannot handle unknown column header: `' + d + '`')
     }
 
     return headerToField[d]

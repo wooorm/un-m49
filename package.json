@@ -29,7 +29,6 @@
     "index.json",
     "to-iso-3166.json"
   ],
-  "dependencies": {},
   "devDependencies": {
     "concat-stream": "^2.0.0",
     "hast-util-select": "^4.0.0",
@@ -40,7 +39,7 @@
     "remark-preset-wooorm": "^8.0.0",
     "tape": "^5.0.0",
     "unified": "^9.0.0",
-    "xo": "^0.34.0"
+    "xo": "^0.38.0"
   },
   "scripts": {
     "generate": "node build",

@@ -44,7 +44,7 @@ function onconcat(buf) {
   var tree = unified().use(parse).parse(buf)
 
   var table = $.select('#downloadTableEN', tree)
-  var headers = $.selectAll('thead td', table).map(clean)
+  var headers = $.selectAll('thead td', table).map((d) => toString(d).trim())
   var rows = $.selectAll('tbody tr', table)
 
   var fields = headers.map((d) => {
@@ -57,13 +57,17 @@ function onconcat(buf) {
 
   var records = rows.map((row) => {
     var record = {}
+    var cells = $.selectAll('td', row)
+    var index = -1
+    var field
+    var value
 
-    $.selectAll('td', row).forEach((cell, index) => {
-      var field = fields[index]
-      var value = clean(cell)
+    while (++index < cells.length) {
+      field = fields[index]
+      value = toString(cells[index]).trim()
 
       if (!field) {
-        throw new Error('Cannot handle superfluous cell: ', cell, index)
+        throw new Error('Cannot handle superfluous cell: ', cells[index], index)
       }
 
       if (booleanFields.includes(field)) {
@@ -71,23 +75,33 @@ function onconcat(buf) {
       }
 
       record[field] = value
-    })
+    }
 
     return record
   })
 
   var byCode = {}
+  var index = -1
+  var stack
+  var record
+  var kind
+  var prefix
+  var code
+  var name
 
-  records.forEach((record) => {
-    var stack = []
+  while (++index < records.length) {
+    record = records[index]
+    stack = []
+    kind = -1
 
-    types.forEach((prefix, kind) => {
-      var code = record[prefix]
-      var name = record[prefix + 'Name']
+    while (++kind < types.length) {
+      prefix = types[kind]
+      code = record[prefix]
+      name = record[prefix + 'Name']
 
       // Sometimes, intermediate sizes aren’t available (e.g., for Antarctica).
       if (!code || !name) {
-        return
+        continue
       }
 
       if (code in byCode) {
@@ -103,8 +117,8 @@ function onconcat(buf) {
       }
 
       stack[kind] = code
-    })
-  })
+    }
+  }
 
   var toIso = {}
 
@@ -123,14 +137,6 @@ function onconcat(buf) {
       return entry
     })
 
-  write('index', codes)
-  write('to-iso-3166', toIso)
-
-  function write(name, data) {
-    fs.writeFileSync(name + '.json', JSON.stringify(data, null, 2) + '\n')
-  }
-}
-
-function clean(d) {
-  return toString(d).trim()
+  fs.writeFileSync('index.json', JSON.stringify(codes, null, 2) + '\n')
+  fs.writeFileSync('to-iso-3166.json', JSON.stringify(toIso, null, 2) + '\n')
 }

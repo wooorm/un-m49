@@ -1,6 +1,7 @@
 # `un-m49`
 
 [![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
 [![Downloads][downloads-badge]][downloads]
 [![Size][size-badge]][size]
 
@@ -115,9 +116,13 @@ Intermediate regions aren’t used a lot.
 
 <!-- Definition -->
 
-[build-badge]: https://img.shields.io/travis/wooorm/un-m49.svg
+[build-badge]: https://github.com/wooorm/un-m49/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/wooorm/un-m49
+[build]: https://github.com/wooorm/un-m49/actions
+
+[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/un-m49.svg
+
+[coverage]: https://codecov.io/github/wooorm/un-m49
 
 [downloads-badge]: https://img.shields.io/npm/dm/un-m49.svg
 

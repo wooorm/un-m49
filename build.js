@@ -63,7 +63,9 @@ function onconcat(buf) {
       value = toString(cells[index]).trim()
 
       if (!field) {
-        throw new Error('Cannot handle superfluous cell: ', cells[index], index)
+        throw new Error(
+          'Cannot handle superfluous cell: `' + value + '` (' + index + ')'
+        )
       }
 
       if (field === 'ldc' || field === 'lldc' || field === 'sids') {

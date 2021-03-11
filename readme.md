@@ -60,7 +60,7 @@ There is no default export.
 
 ### `unM49`
 
-`Array.<Region>` — List of [`Region`][region]s.
+`Region[]` — List of [`Region`][region]s.
 
 ### `Region`
 

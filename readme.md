@@ -7,12 +7,10 @@
 
 [UN M49][m49] codes in an accessible format.
 
-Also includes a pre-built index to map to ISO 3166 codes:
-
-*   [`un-m49/to-iso-3166`][to-iso-3166]
-    — Map UN M49 codes to ISO 3166-1 alpha-3 codes
-
 ## Install
+
+This package is ESM only: Node 12+ is needed to use it and it must be `import`ed
+instead of `require`d.
 
 [npm][]:
 
@@ -23,9 +21,9 @@ npm install un-m49
 ## Use
 
 ```js
-var m49 = require('un-m49')
+import {unM49} from 'un-m49'
 
-console.log(m49.slice(0, 20))
+console.log(unM49.slice(0, 20))
 ```
 
 Yields:
@@ -57,7 +55,10 @@ Yields:
 
 ## API
 
-### `m49`
+This package exports the following identifiers: `unM49`, `toIso3166`.
+There is no default export.
+
+### `unM49`
 
 `Array.<Region>` — List of [`Region`][region]s.
 
@@ -92,6 +93,10 @@ Note that there may be regions “missing” in the stack.
 For example, the parent of the “country or area” `010` `Antarctica` is `001`
 `World`.
 Intermediate regions aren’t used a lot.
+
+### `toIso3166`
+
+`Record.<string, string>` — map UN M49 codes to ISO 3166-1 alpha-3 codes.
 
 ## Related
 
@@ -143,5 +148,3 @@ Intermediate regions aren’t used a lot.
 [region]: #region
 
 [type]: #type
-
-[to-iso-3166]: to-iso-3166.json

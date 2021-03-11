@@ -1,2 +1,2 @@
-*.json
+coverage/
 *.md

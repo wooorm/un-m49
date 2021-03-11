@@ -24,12 +24,14 @@
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
-  "main": "index.json",
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
   "files": [
-    "index.json",
-    "to-iso-3166.json"
+    "index.js"
   ],
   "devDependencies": {
+    "c8": "^7.0.0",
     "concat-stream": "^2.0.0",
     "hast-util-select": "^4.0.0",
     "hast-util-to-string": "^1.0.0",
@@ -44,8 +46,9 @@
   "scripts": {
     "generate": "node build",
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
-    "test-api": "node test",
-    "test": "npm run format && npm run test-api"
+    "test-api": "node test.js",
+    "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov node test.js",
+    "test": "npm run generate && npm run format && npm run test-coverage"
   },
   "prettier": {
     "tabWidth": 2,
@@ -57,10 +60,10 @@
   },
   "xo": {
     "prettier": true,
-    "esnext": false,
     "rules": {
-      "unicorn/no-fn-reference-in-iterator": "off",
-      "unicorn/prefer-set-has": "off"
+      "import/no-mutable-exports": "off",
+      "no-var": "off",
+      "prefer-arrow-callback": "off"
     }
   },
   "remarkConfig": {

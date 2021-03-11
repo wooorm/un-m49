@@ -1,22 +1,20 @@
-'use strict'
-
-var test = require('tape')
-var m49 = require('.')
+import test from 'tape'
+import {unM49} from './index.js'
 
 test('m49', function (t) {
   var index = -1
 
   t.plan(2)
 
-  t.ok(Array.isArray(m49), 'should be an `array`')
+  t.ok(Array.isArray(unM49), 'should be an `array`')
 
-  while (++index < m49.length) {
-    if (m49[index].code !== '826') {
+  while (++index < unM49.length) {
+    if (unM49[index].code !== '826') {
       continue
     }
 
     t.deepEqual(
-      m49[index],
+      unM49[index],
       {
         type: 4,
         name: 'United Kingdom of Great Britain and Northern Ireland',

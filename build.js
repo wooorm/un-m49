@@ -1,12 +1,10 @@
-'use strict'
-
-var fs = require('fs')
-var https = require('https')
-var concat = require('concat-stream')
-var unified = require('unified')
-var parse = require('rehype-parse')
-var $ = require('hast-util-select')
-var toString = require('hast-util-to-string')
+import fs from 'fs'
+import https from 'https'
+import concat from 'concat-stream'
+import unified from 'unified'
+import parse from 'rehype-parse'
+import $ from 'hast-util-select'
+import toString from 'hast-util-to-string'
 
 var headerToField = {
   'Global Code': 'global',
@@ -26,8 +24,6 @@ var headerToField = {
   'Small Island Developing States (SIDS)': 'sids',
   'Developed / Developing Countries': 'status'
 }
-
-var booleanFields = ['ldc', 'lldc', 'sids']
 
 // From big to small:
 var types = ['global', 'region', 'subregion', 'intermediate', 'area']
@@ -70,7 +66,7 @@ function onconcat(buf) {
         throw new Error('Cannot handle superfluous cell: ', cells[index], index)
       }
 
-      if (booleanFields.includes(field)) {
+      if (field === 'ldc' || field === 'lldc' || field === 'sids') {
         value = /^x$/i.test(value)
       }
 
@@ -109,8 +105,8 @@ function onconcat(buf) {
       } else {
         byCode[code] = {
           type: kind,
-          name: name,
-          code: code,
+          name,
+          code,
           iso3166: prefix === 'area' ? record.iso3166 : undefined,
           stack: stack.concat()
         }
@@ -137,6 +133,12 @@ function onconcat(buf) {
       return entry
     })
 
-  fs.writeFileSync('index.json', JSON.stringify(codes, null, 2) + '\n')
-  fs.writeFileSync('to-iso-3166.json', JSON.stringify(toIso, null, 2) + '\n')
+  fs.writeFileSync(
+    'index.js',
+    'export var unM49 = ' +
+      JSON.stringify(codes, null, 2) +
+      '\n\nexport var toIso3166 = ' +
+      JSON.stringify(toIso, null, 2) +
+      '\n'
+  )
 }

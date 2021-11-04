@@ -1,12 +1,12 @@
-import fs from 'fs'
-import https from 'https'
+import fs from 'node:fs'
+import https from 'node:https'
 import concat from 'concat-stream'
-import unified from 'unified'
+import {unified} from 'unified'
 import parse from 'rehype-parse'
-import $ from 'hast-util-select'
-import toString from 'hast-util-to-string'
+import {select, selectAll} from 'hast-util-select'
+import {toString} from 'hast-util-to-string'
 
-var headerToField = {
+const headerToField = {
   'Global Code': 'global',
   'Global Name': 'globalName',
   'Region Code': 'region',
@@ -26,7 +26,7 @@ var headerToField = {
 }
 
 // From big to small:
-var types = ['global', 'region', 'subregion', 'intermediate', 'area']
+const types = ['global', 'region', 'subregion', 'intermediate', 'area']
 
 https
   .request('https://unstats.un.org/unsd/methodology/m49/overview/', onrequest)
@@ -37,13 +37,13 @@ function onrequest(response) {
 }
 
 function onconcat(buf) {
-  var tree = unified().use(parse).parse(buf)
+  const tree = unified().use(parse).parse(buf)
 
-  var table = $.select('#downloadTableEN', tree)
-  var headers = $.selectAll('thead td', table).map((d) => toString(d).trim())
-  var rows = $.selectAll('tbody tr', table)
+  const table = select('#downloadTableEN', tree)
+  const headers = selectAll('thead td', table).map((d) => toString(d).trim())
+  const rows = selectAll('tbody tr', table)
 
-  var fields = headers.map((d) => {
+  const fields = headers.map((d) => {
     if (!(d in headerToField)) {
       throw new Error('Cannot handle unknown column header: `' + d + '`')
     }
@@ -51,12 +51,12 @@ function onconcat(buf) {
     return headerToField[d]
   })
 
-  var records = rows.map((row) => {
-    var record = {}
-    var cells = $.selectAll('td', row)
-    var index = -1
-    var field
-    var value
+  const records = rows.map((row) => {
+    const record = {}
+    const cells = selectAll('td', row)
+    let index = -1
+    let field
+    let value
 
     while (++index < cells.length) {
       field = fields[index]
@@ -78,14 +78,14 @@ function onconcat(buf) {
     return record
   })
 
-  var byCode = {}
-  var index = -1
-  var stack
-  var record
-  var kind
-  var prefix
-  var code
-  var name
+  const byCode = {}
+  let index = -1
+  let stack
+  let record
+  let kind
+  let prefix
+  let code
+  let name
 
   while (++index < records.length) {
     record = records[index]
@@ -118,12 +118,12 @@ function onconcat(buf) {
     }
   }
 
-  var toIso = {}
+  const toIso = {}
 
-  var codes = Object.keys(byCode)
+  const codes = Object.keys(byCode)
     .sort()
     .map((code) => {
-      var entry = byCode[code]
+      const entry = byCode[code]
 
       entry.parent = entry.stack.pop()
       entry.stack = undefined
@@ -137,9 +137,9 @@ function onconcat(buf) {
 
   fs.writeFileSync(
     'index.js',
-    'export var unM49 = ' +
+    'export const unM49 = ' +
       JSON.stringify(codes, null, 2) +
-      '\n\nexport var toIso3166 = ' +
+      '\n\nexport const toIso3166 = ' +
       JSON.stringify(toIso, null, 2) +
       '\n'
   )

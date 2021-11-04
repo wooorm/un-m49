@@ -1,4 +1,4 @@
-export var unM49 = [
+export const unM49 = [
   {
     type: 0,
     name: 'World',
@@ -1929,7 +1929,7 @@ export var unM49 = [
   }
 ]
 
-export var toIso3166 = {
+export const toIso3166 = {
   100: 'BGR',
   104: 'MMR',
   108: 'BDI',

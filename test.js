@@ -2,7 +2,7 @@ import test from 'tape'
 import {unM49} from './index.js'
 
 test('m49', function (t) {
-  var index = -1
+  let index = -1
 
   t.plan(2)
 

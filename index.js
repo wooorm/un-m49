@@ -1957,7 +1957,7 @@ export const unM49 = [
 ]
 
 /**
- * Map UN M49 codes to ISO 3166-1 alpha-3 codes.
+ * Map of UN M49 codes to ISO 3166-1 alpha-3 codes.
  *
  * @type {Record<string, string>}
  */

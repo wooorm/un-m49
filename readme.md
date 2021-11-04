@@ -1,21 +1,67 @@
-# `un-m49`
+# un-m49
 
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
 [![Downloads][downloads-badge]][downloads]
 [![Size][size-badge]][size]
 
-[UN M49][m49] codes in an accessible format.
+Info on [UN M49][m49].
+
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unM49`](#unm49)
+    *   [`toIso3166`](#toiso3166)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Security](#security)
+*   [Related](#related)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package contains info on UN M49 (Standard Country or Area Codes for
+Statistical Use).
+UN M49 is similar to ISO 3166 (the `GB` in `en-GB`).
+The difference is that ISO 3166 uses alphabetical codes based on how a region is
+called by a group of people, whereas UN M49 uses numerical codes.
+Numerical codes are useful because they are resistant to changes and
+geopolitical conflicts.
+UN M49 also contains regions bigger than countries, such as (sub)continents.
+That’s useful for example for `es-419` to describe Spanish as used in Latin
+America and the Caribbean.
+
+## When should I use this?
+
+You can use this package any time you have to deal with regions or UN M49 in
+particular.
 
 ## Install
 
-This package is ESM only: Node 12+ is needed to use it and it must be `import`ed
-instead of `require`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 
 ```sh
 npm install un-m49
+```
+
+In Deno with [Skypack][]:
+
+```js
+import {unM49, toIso3166} from 'https://cdn.skypack.dev/un-m49@2?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import {unM49, toIso3166} from 'https://cdn.skypack.dev/un-m49@2?min'
+</script>
 ```
 
 ## Use
@@ -60,60 +106,83 @@ There is no default export.
 
 ### `unM49`
 
-`Region[]` — List of [`Region`][region]s.
+List of [`Region`][region]s (`Array<Region>`).
 
-### `Region`
+#### `Region`
 
 Object with the following properties:
 
-*   `type` (`Type`) — [`Type`][type]
+*   `type` (`Type`)
+    — [`Type`][type]
     (example: `4`)
-*   `name` (`string`) — Name
+*   `name` (`string`)
+    — name
     (example: `'United Kingdom of Great Britain and Northern Ireland'`)
-*   `code` (`string`) — Three-character UN M49 code
+*   `code` (`string`)
+    — three-character UN M49 code
     (example: `826`)
-*   `iso3166` (`string?`) — ISO 3166-1 alpha-3 code, if `type` represents a
-    country or area
+*   `iso3166` (`string?`)
+    — ISO 3166-1 alpha-3 code, if `type` represents a country or area
     (example: `'GBR'`)
-*   `parent` (`string?`) — Code of parent region, if `type` does not represent
-    the planet
+*   `parent` (`string?`)
+    — code of parent region, if `type` does not represent the planet
     (example: `'154'`)
 
-### `Type`
+#### `Type`
 
 `number`, one of the following:
 
-*   `0` — Global (example: `001` `World`)
-*   `1` — Region (example: `002` `Africa`)
-*   `2` — Subregion (example: `202` `Sub-Saharan Africa`)
-*   `3` — Intermediate region (example: `017` `Middle Africa`)
-*   `4` — Country or area (example: `024` `Angola`)
+*   `0` — global (example: `001` `World`)
+*   `1` — region (example: `002` `Africa`)
+*   `2` — subregion (example: `202` `Sub-Saharan Africa`)
+*   `3` — intermediate region (example: `017` `Middle Africa`)
+*   `4` — country or area (example: `024` `Angola`)
 
-Note that there may be regions “missing” in the stack.
-For example, the parent of the “country or area” `010` `Antarctica` is `001`
-`World`.
-Intermediate regions aren’t used a lot.
+> 👉 **Note**: Regions can be “missing” between a region and its parent.
+> For example, the parent of the “country or area” (`4`) `010` `Antarctica` is
+> `001` `World` (`4`).
+> Intermediate regions (`3`) aren’t used a lot.
 
 ### `toIso3166`
 
-`Record.<string, string>` — map UN M49 codes to ISO 3166-1 alpha-3 codes.
+Map of UN M49 codes to ISO 3166-1 alpha-3 codes (`Record<string, string>`).
+
+## Types
+
+This package is fully typed with [TypeScript][].
+It exports the types `Type` and `UNM49` that model these specific interfaces.
+
+## Compatibility
+
+This package is at least compatible with all maintained versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+It also works in Deno and modern browsers.
+
+## Security
+
+This package is safe.
 
 ## Related
 
-*   [`bcp-47`](https://github.com/wooorm/bcp-47)
-    — Parse and stringify BCP 47 language tags
-*   [`bcp-47-match`](https://github.com/wooorm/bcp-47-match)
-    — Match BCP 47 language tags with language ranges per RFC 4647
-*   [`bcp-47-normalize`](https://github.com/wooorm/bcp-47-normalize)
-    — Normalize, canonicalize, and format BCP 47 tags
-*   [`iso-3166`](https://github.com/wooorm/iso-3166)
+*   [`wooorm/bcp-47`](https://github.com/wooorm/bcp-47)
+    — parse and stringify BCP 47 language tags
+*   [`wooorm/bcp-47-match`](https://github.com/wooorm/bcp-47-match)
+    — match BCP 47 language tags with language ranges per RFC 4647
+*   [`wooorm/bcp-47-normalize`](https://github.com/wooorm/bcp-47-normalize)
+    — normalize, canonicalize, and format BCP 47 tags
+*   [`wooorm/iso-3166`](https://github.com/wooorm/iso-3166)
     — ISO 3166 codes
-*   [`iso-639-2`](https://github.com/wooorm/iso-639-2)
+*   [`wooorm/iso-639-2`](https://github.com/wooorm/iso-639-2)
     — ISO 639-2 codes
-*   [`iso-639-3`](https://github.com/wooorm/iso-639-3)
+*   [`wooorm/iso-639-3`](https://github.com/wooorm/iso-639-3)
     — ISO 639-3 codes
-*   [`iso-15924`](https://github.com/wooorm/iso-15924)
+*   [`wooorm/iso-15924`](https://github.com/wooorm/iso-15924)
     — ISO 15924 codes
+
+## Contribute
+
+Yes please!
+See [How to Contribute to Open Source][contribute].
 
 ## License
 
@@ -139,9 +208,17 @@ Intermediate regions aren’t used a lot.
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[skypack]: https://www.skypack.dev
+
 [license]: license
 
 [author]: https://wooorm.com
+
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[typescript]: https://www.typescriptlang.org
+
+[contribute]: https://opensource.guide/how-to-contribute/
 
 [m49]: https://unstats.un.org/unsd/methodology/m49/
 

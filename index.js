@@ -1,3 +1,30 @@
+/**
+ * @typedef {0|1|2|3|4} Type
+ *   *   `0` — Global (example: `001` `World`)
+ *   *   `1` — Region (example: `002` `Africa`)
+ *   *   `2` — Subregion (example: `202` `Sub-Saharan Africa`)
+ *   *   `3` — Intermediate region (example: `017` `Middle Africa`)
+ *   *   `4` — Country or area (example: `024` `Angola`)
+ *
+ * @typedef UNM49
+ *   Region.
+ * @property {Type} type
+ *   Type of region (example: `4`).
+ * @property {string} name
+ *   Name of region (example: `'United Kingdom of Great Britain and Northern Ireland'`).
+ * @property {string} code
+ *   Three-character UN M49 code (example: `826`).
+ * @property {string|undefined} [iso3166]
+ *   ISO 3166-1 alpha-3 code, if `type` represents a country or area (example: `'GBR'`).
+ * @property {string|undefined} [parent]
+ *   Code of parent region, if `type` does not represent the planet (example: `'154'`).
+ */
+
+/**
+ * List of `Region`s.
+ *
+ * @type {Array<UNM49>}
+ */
 export const unM49 = [
   {
     type: 0,
@@ -1929,6 +1956,11 @@ export const unM49 = [
   }
 ]
 
+/**
+ * Map UN M49 codes to ISO 3166-1 alpha-3 codes.
+ *
+ * @type {Record<string, string>}
+ */
 export const toIso3166 = {
   100: 'BGR',
   104: 'MMR',

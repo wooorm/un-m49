@@ -1789,7 +1789,7 @@ export const unM49 = [
   },
   {
     type: 4,
-    name: 'Turkey',
+    name: 'Türkiye',
     code: '792',
     iso3166: 'TUR',
     parent: '145'

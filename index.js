@@ -1250,7 +1250,7 @@ export const unM49 = [
   },
   {
     type: 4,
-    name: 'Netherlands',
+    name: 'Netherlands (Kingdom of the)',
     code: '528',
     iso3166: 'NLD',
     parent: '155'
@@ -1572,13 +1572,6 @@ export const unM49 = [
   },
   {
     type: 4,
-    name: 'Sark',
-    code: '680',
-    iso3166: '',
-    parent: '830'
-  },
-  {
-    type: 4,
     name: 'Saudi Arabia',
     code: '682',
     iso3166: 'SAU',
@@ -1851,24 +1844,18 @@ export const unM49 = [
     parent: '154'
   },
   {
-    type: 3,
-    name: 'Channel Islands',
-    code: '830',
-    parent: '154'
-  },
-  {
     type: 4,
     name: 'Guernsey',
     code: '831',
     iso3166: 'GGY',
-    parent: '830'
+    parent: '154'
   },
   {
     type: 4,
     name: 'Jersey',
     code: '832',
     iso3166: 'JEY',
-    parent: '830'
+    parent: '154'
   },
   {
     type: 4,
